@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getBlogs } from "./services/blogs";
 import { login } from "./services/login";
-import { LoginForm, Blogs } from "./components";
+import { LoginForm, Blogs, TheHeader } from "./components";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -52,13 +52,7 @@ const App = () => {
 
       {user && (
         <>
-          <header>
-            <h1>Bloglist</h1>
-
-            <p>Welcome, {user.name}!</p>
-
-            <button onClick={handleLogout}>Logout</button>
-          </header>
+          <TheHeader user={user} onLogout={handleLogout} />
 
           <section>
             <h2>blogs</h2>
