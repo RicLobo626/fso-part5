@@ -1,3 +1,5 @@
+import { Button } from ".";
+
 export const LoginForm = ({ onLogin }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ export const LoginForm = ({ onLogin }) => {
         <input id="password" name="password" type="password" />
       </div>
 
-      <button type="submit">Login</button>
+      <Button type="submit" text="Login" />
     </form>
   );
 };
