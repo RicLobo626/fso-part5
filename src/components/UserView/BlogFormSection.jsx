@@ -1,8 +1,17 @@
 import { Button } from "..";
 
-const BlogForm = ({ onSubmit, onCancel }) => {
+const BlogForm = ({ onCreateBlog, onCancel }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData);
+
+    onCreateBlog(values, e);
+  };
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="title">Title</label>
         <input type="text" id="title" name="title" />
@@ -28,7 +37,7 @@ export const BlogFormSection = ({ onCreateBlog, onCancel, ...props }) => {
   return (
     <section {...props}>
       <h2>Create new</h2>
-      <BlogForm onSubmit={onCreateBlog} onCancel={onCancel} />
+      <BlogForm onCreateBlog={onCreateBlog} onCancel={onCancel} />
     </section>
   );
 };

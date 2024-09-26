@@ -25,12 +25,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     getAndSetBlogs();
   }, []);
 
-  const handleCreateBlog = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target);
-    const values = Object.fromEntries(formData);
-
+  const handleCreateBlog = async (values, e) => {
     try {
       const blog = await createBlog(values);
       setBlogs(blogs.concat(blog));
