@@ -13,3 +13,9 @@ export const createBlog = async (body) => {
 
   return data;
 };
+
+export const likeBlog = async (id) => {
+  const { data } = await axiosInstance.put(`${baseUrl}/${id}`);
+
+  return data;
+};

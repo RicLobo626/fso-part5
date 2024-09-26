@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Button } from "../Button";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, onLike }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
+
+  const handleLike = () => onLike(blog.id);
 
   return (
     <li className="blog">
@@ -27,7 +29,7 @@ const Blog = ({ blog }) => {
         <div id={`blog-${blog.id}-details`}>
           <p>{blog.url}</p>
           <p>
-            {blog.likes} likes <Button text="Like" />
+            {blog.likes} likes <Button text="Like" onClick={handleLike} />
           </p>
           <p>{blog.user.name}</p>
         </div>
@@ -36,7 +38,7 @@ const Blog = ({ blog }) => {
   );
 };
 
-const Blogs = ({ blogs, isLoading }) => {
+const Blogs = ({ blogs, isLoading, onLikeBlog }) => {
   if (isLoading) {
     return <p>Loading blogs...</p>;
   }
@@ -48,17 +50,17 @@ const Blogs = ({ blogs, isLoading }) => {
   return (
     <ul className="blogs">
       {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} onLike={onLikeBlog} />
       ))}
     </ul>
   );
 };
 
-export const BlogsSection = ({ blogs, isLoading }) => {
+export const BlogsSection = ({ blogs, isLoading, onLikeBlog }) => {
   return (
     <section>
       <h2>All blogs</h2>
-      <Blogs blogs={blogs} isLoading={isLoading} />
+      <Blogs blogs={blogs} isLoading={isLoading} onLikeBlog={onLikeBlog} />
     </section>
   );
 };

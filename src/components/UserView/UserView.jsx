@@ -1,4 +1,4 @@
-import { createBlog, getBlogs } from "../../services/blogs";
+import { createBlog, getBlogs, likeBlog } from "../../services/blogs";
 import { useState, useEffect } from "react";
 import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
 import { handleError } from "../../helpers/errorHelper";
@@ -8,6 +8,11 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formIsVisible, setFormIsVisible] = useState(false);
 
+  const handleAndShowError = (e) => {
+    const { message } = handleError(e);
+    showError(message);
+  };
+
   useEffect(() => {
     const getAndSetBlogs = async () => {
       try {
@@ -15,8 +20,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
         const blogs = await getBlogs();
         setBlogs(blogs);
       } catch (e) {
-        const { message } = handleError(e);
-        showError(message);
+        handleAndShowError(e);
       } finally {
         setIsLoading(false);
       }
@@ -32,8 +36,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
       showSuccess("Blog created successfully");
       e.target.reset();
     } catch (e) {
-      const { message } = handleError(e);
-      showError(message);
+      handleAndShowError(e);
     }
   };
 
@@ -41,9 +44,18 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     setFormIsVisible(!formIsVisible);
   };
 
+  const handleLikeBlog = async (id) => {
+    try {
+      const blog = await likeBlog(id);
+      setBlogs(blogs.map((b) => (b.id === id ? blog : b)));
+    } catch (e) {
+      handleAndShowError(e);
+    }
+  };
+
   return (
     <main>
-      <TheHeader user={user} onLogout={onLogout} />
+      <TheHeader onLogout={onLogout} user={user} />
 
       <Button
         onClick={handleToggleForm}
@@ -57,7 +69,11 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
         className={!formIsVisible ? "hidden" : ""}
       />
 
-      <BlogsSection blogs={blogs} isLoading={isLoading} />
+      <BlogsSection
+        onLikeBlog={handleLikeBlog}
+        blogs={blogs}
+        isLoading={isLoading}
+      />
     </main>
   );
 };
