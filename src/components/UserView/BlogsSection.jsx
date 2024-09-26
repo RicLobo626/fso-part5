@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { Button } from "../Button";
 
-const Blog = ({ blog, onLike }) => {
+const Blog = ({ onLike, onDelete, blog, user }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  const isCreator = blog.user.username === user.username;
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
   };
 
   const handleLike = () => onLike(blog.id);
+  const handleDelete = () => {
+    if (window.confirm(`Delete blog ${blog.title} by ${blog.author}?`)) {
+      onDelete(blog.id);
+    }
+  };
 
   return (
     <li className="blog">
@@ -18,8 +25,8 @@ const Blog = ({ blog, onLike }) => {
         </h3>
 
         <Button
-          text={isExpanded ? "Hide" : "View"}
           onClick={handleToggle}
+          text={isExpanded ? "Hide" : "View"}
           aria-expanded={isExpanded}
           aria-controls={`blog-${blog.id}-details`}
         />
@@ -29,16 +36,17 @@ const Blog = ({ blog, onLike }) => {
         <div id={`blog-${blog.id}-details`}>
           <p>{blog.url}</p>
           <p>
-            {blog.likes} likes <Button text="Like" onClick={handleLike} />
+            {blog.likes} likes <Button onClick={handleLike} text="Like" />
           </p>
           <p>{blog.user.name}</p>
+          {isCreator && <Button onClick={handleDelete} text="Delete" />}
         </div>
       )}
     </li>
   );
 };
 
-const Blogs = ({ blogs, isLoading, onLikeBlog }) => {
+const Blogs = ({ onLikeBlog, onDeleteBlog, isLoading, blogs, user }) => {
   if (isLoading) {
     return <p>Loading blogs...</p>;
   }
@@ -52,17 +60,35 @@ const Blogs = ({ blogs, isLoading, onLikeBlog }) => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
-          <Blog key={blog.id} blog={blog} onLike={onLikeBlog} />
+          <Blog
+            onLike={onLikeBlog}
+            onDelete={onDeleteBlog}
+            blog={blog}
+            user={user}
+            key={blog.id}
+          />
         ))}
     </ul>
   );
 };
 
-export const BlogsSection = ({ blogs, isLoading, onLikeBlog }) => {
+export const BlogsSection = ({
+  onLikeBlog,
+  onDeleteBlog,
+  isLoading,
+  blogs,
+  user,
+}) => {
   return (
     <section>
       <h2>All blogs</h2>
-      <Blogs blogs={blogs} isLoading={isLoading} onLikeBlog={onLikeBlog} />
+      <Blogs
+        blogs={blogs}
+        isLoading={isLoading}
+        onLikeBlog={onLikeBlog}
+        onDeleteBlog={onDeleteBlog}
+        user={user}
+      />
     </section>
   );
 };

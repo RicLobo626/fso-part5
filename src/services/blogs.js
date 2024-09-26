@@ -19,3 +19,5 @@ export const likeBlog = async (id) => {
 
   return data;
 };
+
+export const deleteBlog = (id) => axiosInstance.delete(`${baseUrl}/${id}`);

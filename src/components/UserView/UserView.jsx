@@ -1,4 +1,4 @@
-import { createBlog, getBlogs, likeBlog } from "../../services/blogs";
+import { createBlog, deleteBlog, getBlogs, likeBlog } from "../../services/blogs";
 import { useState, useEffect } from "react";
 import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
 import { handleError } from "../../helpers/errorHelper";
@@ -53,6 +53,16 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     }
   };
 
+  const handleDeleteBlog = async (id) => {
+    try {
+      await deleteBlog(id);
+      setBlogs(blogs.filter((b) => b.id !== id));
+      showSuccess("Blog deleted successfully");
+    } catch (e) {
+      handleAndShowError(e);
+    }
+  };
+
   return (
     <main>
       <TheHeader onLogout={onLogout} user={user} />
@@ -71,8 +81,10 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
 
       <BlogsSection
         onLikeBlog={handleLikeBlog}
-        blogs={blogs}
+        onDeleteBlog={handleDeleteBlog}
         isLoading={isLoading}
+        blogs={blogs}
+        user={user}
       />
     </main>
   );
