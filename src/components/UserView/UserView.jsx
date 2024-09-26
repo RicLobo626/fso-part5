@@ -1,6 +1,6 @@
-import { getBlogs } from "../../services/blogs";
+import { createBlog, getBlogs } from "../../services/blogs";
 import { useState, useEffect } from "react";
-import { Blogs, TheHeader } from "..";
+import { Blogs, TheHeader, BlogForm } from "..";
 
 export const UserView = ({ user, onLogout }) => {
   const [blogs, setBlogs] = useState([]);
@@ -22,9 +22,29 @@ export const UserView = ({ user, onLogout }) => {
     getAndSetBlogs();
   }, []);
 
+  const handleSubmitBlog = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData);
+
+    try {
+      const blog = await createBlog(values);
+      setBlogs(blogs.concat(blog));
+      e.target.reset();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <TheHeader user={user} onLogout={onLogout} />
+
+      <section>
+        <h2>Create new</h2>
+        <BlogForm onSubmit={handleSubmitBlog} />
+      </section>
 
       <section>
         <h2>All blogs</h2>
