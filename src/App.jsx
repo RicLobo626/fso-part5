@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { LoginForm, UserView } from "./components";
+import { AlertBar, LoginForm, UserView } from "./components";
 import { login } from "./services/login";
+import { handleError } from "./helpers/errorHelper";
 
 const App = () => {
   const [user, setUser] = useState(null);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
@@ -13,13 +15,19 @@ const App = () => {
     }
   }, []);
 
+  const showSuccess = (message) => setAlert({ message, type: "success" });
+  const showError = (message) => setAlert({ message, type: "error" });
+  const handleCloseAlert = () => setAlert(null);
+
   const handleLogin = async (values) => {
     try {
       const data = await login(values);
       window.localStorage.setItem("loggedUser", JSON.stringify(data));
+      showSuccess("Login successful");
       setUser(data);
     } catch (e) {
-      console.error(e);
+      const { message } = handleError(e);
+      showError(message);
     }
   };
 
@@ -29,10 +37,18 @@ const App = () => {
   };
 
   return (
-    <main>
+    <>
+      <AlertBar alert={alert} onClose={handleCloseAlert} />
       {!user && <LoginForm onLogin={handleLogin} />}
-      {user && <UserView user={user} onLogout={handleLogout} />}
-    </main>
+      {user && (
+        <UserView
+          user={user}
+          onLogout={handleLogout}
+          showError={showError}
+          showSuccess={showSuccess}
+        />
+      )}
+    </>
   );
 };
 
