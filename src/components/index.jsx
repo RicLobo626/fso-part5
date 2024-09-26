@@ -1,7 +1,7 @@
 export { LoginForm } from "./LoginForm";
 export { Button } from "./Button";
-export { Blogs } from "./UserView/Blogs";
+export { BlogsSection } from "./UserView/BlogsSection";
 export { TheHeader } from "./UserView/TheHeader";
-export { BlogForm } from "./UserView/BlogForm";
+export { BlogFormSection } from "./UserView/BlogFormSection";
 export { UserView } from "./UserView/UserView";
 export { AlertBar } from "./AlertBar";

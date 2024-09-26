@@ -1,4 +1,4 @@
-export const BlogForm = ({ onSubmit }) => {
+const BlogForm = ({ onSubmit }) => {
   return (
     <form onSubmit={onSubmit}>
       <div>
@@ -18,5 +18,14 @@ export const BlogForm = ({ onSubmit }) => {
 
       <button type="submit">Create</button>
     </form>
+  );
+};
+
+export const BlogFormSection = ({ onCreateBlog }) => {
+  return (
+    <section>
+      <h2>Create new</h2>
+      <BlogForm onSubmit={onCreateBlog} />
+    </section>
   );
 };

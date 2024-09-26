@@ -1,6 +1,6 @@
 import { createBlog, getBlogs } from "../../services/blogs";
 import { useState, useEffect } from "react";
-import { Blogs, TheHeader, BlogForm } from "..";
+import { TheHeader, BlogFormSection, BlogsSection } from "..";
 import { handleError } from "../../helpers/errorHelper";
 
 export const UserView = ({ user, onLogout, showError, showSuccess }) => {
@@ -24,7 +24,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     getAndSetBlogs();
   }, []);
 
-  const handleSubmitBlog = async (e) => {
+  const handleCreateBlog = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
@@ -45,15 +45,9 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     <main>
       <TheHeader user={user} onLogout={onLogout} />
 
-      <section>
-        <h2>Create new</h2>
-        <BlogForm onSubmit={handleSubmitBlog} />
-      </section>
+      <BlogFormSection onCreateBlog={handleCreateBlog} />
 
-      <section>
-        <h2>All blogs</h2>
-        <Blogs blogs={blogs} isLoading={isLoading} />
-      </section>
+      <BlogsSection blogs={blogs} isLoading={isLoading} />
     </main>
   );
 };

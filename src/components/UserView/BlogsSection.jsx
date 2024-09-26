@@ -6,7 +6,7 @@ const Blog = ({ blog }) => {
   );
 };
 
-export const Blogs = ({ blogs, isLoading }) => {
+const Blogs = ({ blogs, isLoading }) => {
   if (isLoading) {
     return <p>Loading blogs...</p>;
   }
@@ -21,5 +21,14 @@ export const Blogs = ({ blogs, isLoading }) => {
         <Blog key={blog.id} blog={blog} />
       ))}
     </ul>
+  );
+};
+
+export const BlogsSection = ({ blogs, isLoading }) => {
+  return (
+    <section>
+      <h2>All blogs</h2>
+      <Blogs blogs={blogs} isLoading={isLoading} />
+    </section>
   );
 };
