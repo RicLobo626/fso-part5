@@ -19,6 +19,11 @@ const App = () => {
   const showError = (message) => setAlert({ message, type: "error" });
   const handleCloseAlert = () => setAlert(null);
 
+  const handleAndShowError = (e) => {
+    const { message } = handleError(e);
+    showError(message);
+  };
+
   const handleLogin = async (values) => {
     try {
       const data = await login(values);
@@ -26,8 +31,7 @@ const App = () => {
       showSuccess("Login successful");
       setUser(data);
     } catch (e) {
-      const { message } = handleError(e);
-      showError(message);
+      handleAndShowError(e);
     }
   };
 
@@ -44,8 +48,8 @@ const App = () => {
         <UserView
           user={user}
           onLogout={handleLogout}
-          showError={showError}
-          showSuccess={showSuccess}
+          onError={handleAndShowError}
+          onSuccess={showSuccess}
         />
       )}
     </>

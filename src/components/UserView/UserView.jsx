@@ -1,17 +1,11 @@
 import { createBlog, deleteBlog, getBlogs, likeBlog } from "../../services/blogs";
 import { useState, useEffect } from "react";
 import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
-import { handleError } from "../../helpers/errorHelper";
 
-export const UserView = ({ user, onLogout, showError, showSuccess }) => {
+export const UserView = ({ user, onLogout, onError, onSuccess }) => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formIsVisible, setFormIsVisible] = useState(false);
-
-  const handleAndShowError = (e) => {
-    const { message } = handleError(e);
-    showError(message);
-  };
 
   useEffect(() => {
     const getAndSetBlogs = async () => {
@@ -20,7 +14,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
         const blogs = await getBlogs();
         setBlogs(blogs);
       } catch (e) {
-        handleAndShowError(e);
+        onError(e);
       } finally {
         setIsLoading(false);
       }
@@ -33,10 +27,10 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     try {
       const blog = await createBlog(values);
       setBlogs(blogs.concat(blog));
-      showSuccess("Blog created successfully");
+      onSuccess("Blog created successfully");
       e.target.reset();
     } catch (e) {
-      handleAndShowError(e);
+      onError(e);
     }
   };
 
@@ -49,7 +43,7 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
       const blog = await likeBlog(id);
       setBlogs(blogs.map((b) => (b.id === id ? blog : b)));
     } catch (e) {
-      handleAndShowError(e);
+      onError(e);
     }
   };
 
@@ -57,9 +51,9 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     try {
       await deleteBlog(id);
       setBlogs(blogs.filter((b) => b.id !== id));
-      showSuccess("Blog deleted successfully");
+      onSuccess("Blog deleted successfully");
     } catch (e) {
-      handleAndShowError(e);
+      onError(e);
     }
   };
 
