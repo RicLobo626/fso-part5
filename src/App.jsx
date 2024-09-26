@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { getBlogs } from "./services/blogs";
+import { LoginForm, UserView } from "./components";
 import { login } from "./services/login";
-import { LoginForm, Blogs, TheHeader } from "./components";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -15,51 +13,25 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!user) {
-      window.localStorage.removeItem("loggedUser");
-      return;
-    }
-
-    window.localStorage.setItem("loggedUser", JSON.stringify(user));
-
-    const getAndSetBlogs = async () => {
-      try {
-        const blogs = await getBlogs();
-        setBlogs(blogs);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    getAndSetBlogs();
-  }, [user]);
-
   const handleLogin = async (values) => {
     try {
       const data = await login(values);
+      window.localStorage.setItem("loggedUser", JSON.stringify(data));
       setUser(data);
     } catch (e) {
       console.error(e);
     }
   };
 
-  const handleLogout = () => setUser(null);
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedUser");
+    setUser(null);
+  };
 
   return (
     <main>
       {!user && <LoginForm onLogin={handleLogin} />}
-
-      {user && (
-        <>
-          <TheHeader user={user} onLogout={handleLogout} />
-
-          <section>
-            <h2>blogs</h2>
-            <Blogs blogs={blogs} />
-          </section>
-        </>
-      )}
+      {user && <UserView user={user} onLogout={handleLogout} />}
     </main>
   );
 };

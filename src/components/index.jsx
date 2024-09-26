@@ -1,4 +1,6 @@
-export { Blogs } from "./Blogs";
 export { LoginForm } from "./LoginForm";
 export { Button } from "./Button";
-export { TheHeader } from "./TheHeader";
+export { Blogs } from "./UserView/Blogs";
+export { TheHeader } from "./UserView/TheHeader";
+export { BlogForm } from "./UserView/BlogForm";
+export { UserView } from "./UserView/UserView";
