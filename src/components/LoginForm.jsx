@@ -1,4 +1,5 @@
 import { Button } from ".";
+import PropTypes from "prop-types";
 
 export const LoginForm = ({ onLogin }) => {
   const handleSubmit = (e) => {
@@ -25,4 +26,8 @@ export const LoginForm = ({ onLogin }) => {
       <Button type="submit" text="Login" />
     </form>
   );
+};
+
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired,
 };

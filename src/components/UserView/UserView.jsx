@@ -1,6 +1,7 @@
 import { createBlog, deleteBlog, getBlogs, likeBlog } from "../../services/blogs";
 import { useState, useEffect } from "react";
 import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
+import PropTypes from "prop-types";
 
 export const UserView = ({ user, onLogout, onError, onSuccess }) => {
   const [blogs, setBlogs] = useState([]);
@@ -82,4 +83,11 @@ export const UserView = ({ user, onLogout, onError, onSuccess }) => {
       />
     </main>
   );
+};
+
+UserView.propTypes = {
+  user: PropTypes.object.isRequired,
+  onLogout: PropTypes.func.isRequired,
+  onError: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
 };
