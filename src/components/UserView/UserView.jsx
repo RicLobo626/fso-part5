@@ -1,11 +1,12 @@
 import { createBlog, getBlogs } from "../../services/blogs";
 import { useState, useEffect } from "react";
-import { TheHeader, BlogFormSection, BlogsSection } from "..";
+import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
 import { handleError } from "../../helpers/errorHelper";
 
 export const UserView = ({ user, onLogout, showError, showSuccess }) => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [formIsVisible, setFormIsVisible] = useState(false);
 
   useEffect(() => {
     const getAndSetBlogs = async () => {
@@ -41,11 +42,25 @@ export const UserView = ({ user, onLogout, showError, showSuccess }) => {
     }
   };
 
+  const handleToggleForm = () => {
+    setFormIsVisible(!formIsVisible);
+  };
+
   return (
     <main>
       <TheHeader user={user} onLogout={onLogout} />
 
-      <BlogFormSection onCreateBlog={handleCreateBlog} />
+      <Button
+        onClick={handleToggleForm}
+        text="New blog"
+        className={formIsVisible ? "hidden" : ""}
+      />
+
+      <BlogFormSection
+        onCreateBlog={handleCreateBlog}
+        onCancel={handleToggleForm}
+        className={!formIsVisible ? "hidden" : ""}
+      />
 
       <BlogsSection blogs={blogs} isLoading={isLoading} />
     </main>

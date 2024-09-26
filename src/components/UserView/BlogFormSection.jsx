@@ -1,4 +1,6 @@
-const BlogForm = ({ onSubmit }) => {
+import { Button } from "..";
+
+const BlogForm = ({ onSubmit, onCancel }) => {
   return (
     <form onSubmit={onSubmit}>
       <div>
@@ -16,16 +18,17 @@ const BlogForm = ({ onSubmit }) => {
         <input type="text" id="url" name="url" />
       </div>
 
-      <button type="submit">Create</button>
+      <Button type="submit" text="Create" />
+      <Button onClick={onCancel} text="Cancel" type="button" />
     </form>
   );
 };
 
-export const BlogFormSection = ({ onCreateBlog }) => {
+export const BlogFormSection = ({ onCreateBlog, onCancel, ...props }) => {
   return (
-    <section>
+    <section {...props}>
       <h2>Create new</h2>
-      <BlogForm onSubmit={onCreateBlog} />
+      <BlogForm onSubmit={onCreateBlog} onCancel={onCancel} />
     </section>
   );
 };
