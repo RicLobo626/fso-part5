@@ -1,7 +1,10 @@
-export { LoginForm } from "./LoginForm";
-export { Button } from "./Button";
-export { BlogsSection } from "./UserView/BlogsSection";
-export { TheHeader } from "./UserView/TheHeader";
-export { BlogFormSection } from "./UserView/BlogFormSection";
-export { UserView } from "./UserView/UserView";
-export { AlertBar } from "./AlertBar";
+export { BlogFormSection } from "@/components/UserView/BlogFormSection/BlogFormSection";
+export { BlogForm } from "@/components/UserView/BlogFormSection/BlogForm";
+export { BlogsSection } from "@/components/UserView/BlogsSection/BlogsSection";
+export { Blog } from "@/components/UserView/BlogsSection/Blogs/Blog/Blog";
+export { Blogs } from "@/components/UserView/BlogsSection/Blogs/Blogs";
+export { TheHeader } from "@/components/UserView/TheHeader";
+export { UserView } from "@/components/UserView/UserView";
+export { LoginForm } from "@/components/LoginForm";
+export { AlertBar } from "@/components/AlertBar";
+export { Button } from "@/components/Button";

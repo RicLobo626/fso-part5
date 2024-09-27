@@ -1,4 +1,4 @@
-import { Button } from "..";
+import { Button } from "@/components";
 
 export const TheHeader = ({ user, onLogout }) => {
   return (

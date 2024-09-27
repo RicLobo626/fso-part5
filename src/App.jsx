@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { AlertBar, LoginForm, UserView } from "./components";
-import { login } from "./services/login";
-import { handleError } from "./helpers/errorHelper";
+import { AlertBar, LoginForm, UserView } from "@/components";
+import { login } from "@/services/login";
+import { handleError } from "@/helpers/errorHelper";
 
 const App = () => {
   const [user, setUser] = useState(null);

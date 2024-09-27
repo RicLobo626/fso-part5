@@ -1,4 +1,4 @@
-import { Button } from ".";
+import { Button } from "@/components";
 import PropTypes from "prop-types";
 
 export const LoginForm = ({ onLogin }) => {

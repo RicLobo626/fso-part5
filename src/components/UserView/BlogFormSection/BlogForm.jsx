@@ -1,6 +1,6 @@
-import { Button } from "..";
+import { Button } from "@/components";
 
-const BlogForm = ({ onCreateBlog, onCancel }) => {
+export const BlogForm = ({ onCreateBlog, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -30,14 +30,5 @@ const BlogForm = ({ onCreateBlog, onCancel }) => {
       <Button type="submit" text="Create" />
       <Button onClick={onCancel} text="Cancel" type="button" />
     </form>
-  );
-};
-
-export const BlogFormSection = ({ onCreateBlog, onCancel, ...props }) => {
-  return (
-    <section {...props}>
-      <h2>Create new</h2>
-      <BlogForm onCreateBlog={onCreateBlog} onCancel={onCancel} />
-    </section>
   );
 };

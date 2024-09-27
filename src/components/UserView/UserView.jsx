@@ -1,4 +1,4 @@
-import { createBlog, deleteBlog, getBlogs, likeBlog } from "../../services/blogs";
+import { createBlog, deleteBlog, getBlogs, likeBlog } from "@/services/blogs";
 import { useState, useEffect } from "react";
 import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
 import PropTypes from "prop-types";
