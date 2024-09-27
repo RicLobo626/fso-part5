@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Blog } from "@/components";
-import { beforeEach } from "vitest";
 
 describe("Blog component", () => {
   const blog = {
