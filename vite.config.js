@@ -13,6 +13,11 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: "./testSetup.js",
+  },
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
