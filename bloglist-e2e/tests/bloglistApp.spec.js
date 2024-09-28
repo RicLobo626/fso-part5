@@ -1,11 +1,14 @@
 const { test, describe, beforeEach, expect } = require("@playwright/test");
+const { createBlog } = require("./helper");
 const path = require("path");
+const db = require("../db");
 
 const authFile = path.join(__dirname, "../playwright/.auth/user.json");
 
 describe("Bloglist app", () => {
   beforeEach(async ({ page }) => {
     await page.goto("/");
+    await db.resetBlogs();
   });
 
   test("heading is shown", async ({ page }) => {
@@ -49,15 +52,46 @@ describe("Bloglist app", () => {
     });
 
     test("a new blog can be created", async ({ page }) => {
-      await page.getByRole("button", { name: "New blog" }).click();
-      await page.getByLabel("Title").fill("Test blog");
-      await page.getByLabel("Author").fill("Test author");
-      await page.getByLabel("URL").fill("http://www.test.com");
-      await page.getByRole("button", { name: "Create" }).click();
+      await createBlog(page, {
+        title: "Test blog 1",
+        author: "Test author 1",
+        url: "http://www.test1.com",
+      });
 
       await expect(
-        page.getByRole("listitem").filter({ hasText: "Test blog" })
+        page.getByRole("listitem").filter({ hasText: "Test blog 1" })
       ).toBeVisible();
+    });
+
+    describe("And several blogs exist", () => {
+      beforeEach(async ({ page }) => {
+        for (let i = 1; i < 4; i++) {
+          await createBlog(page, {
+            title: `Test blog ${i}`,
+            author: `Test author ${i}`,
+            url: `http://www.test${i}.com`,
+          });
+        }
+      });
+
+      describe("And a blog is expanded", () => {
+        beforeEach(async ({ page }) => {
+          await page
+            .getByRole("listitem")
+            .filter({ hasText: "Test blog 2" })
+            .getByRole("button", { name: "View" })
+            .click();
+        });
+
+        test("a blog can be liked", async ({ page }) => {
+          const blog = page.getByRole("listitem").filter({ hasText: "Test blog 2" });
+
+          await expect(blog.getByText("likes")).toContainText("0 likes");
+          await page.getByRole("button", { name: "Like" }).click();
+          await page.getByRole("button", { name: "Like" }).click();
+          await expect(blog.getByText("likes")).toContainText("2 likes");
+        });
+      });
     });
   });
 });
