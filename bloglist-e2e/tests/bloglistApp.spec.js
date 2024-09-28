@@ -39,4 +39,25 @@ describe("Bloglist app", () => {
       await page.context().storageState({ path: authFile });
     });
   });
+
+  describe("When logged in", () => {
+    test.use({ storageState: authFile });
+
+    test("welcome message and logout button are shown", async ({ page }) => {
+      await expect(page.getByText("Welcome", { exact: false })).toBeVisible();
+      await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
+    });
+
+    test("a new blog can be created", async ({ page }) => {
+      await page.getByRole("button", { name: "New blog" }).click();
+      await page.getByLabel("Title").fill("Test blog");
+      await page.getByLabel("Author").fill("Test author");
+      await page.getByLabel("URL").fill("http://www.test.com");
+      await page.getByRole("button", { name: "Create" }).click();
+
+      await expect(
+        page.getByRole("listitem").filter({ hasText: "Test blog" })
+      ).toBeVisible();
+    });
+  });
 });
