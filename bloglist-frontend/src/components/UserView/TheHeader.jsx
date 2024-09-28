@@ -5,10 +5,12 @@ export const TheHeader = ({ user, onLogout }) => {
     <header>
       <h1>Bloglist</h1>
 
-      <p>
-        Welcome, {user.name}!
-        <Button onClick={onLogout} text="Logout" />
-      </p>
+      {user && (
+        <p>
+          Welcome, {user.name}!
+          <Button onClick={onLogout} text="Logout" />
+        </p>
+      )}
     </header>
   );
 };

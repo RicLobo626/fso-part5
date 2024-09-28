@@ -1,9 +1,9 @@
 import { createBlog, deleteBlog, getBlogs, likeBlog } from "@/services/blogs";
 import { useState, useEffect } from "react";
-import { TheHeader, BlogFormSection, BlogsSection, Button } from "..";
+import { BlogFormSection, BlogsSection, Button } from "..";
 import PropTypes from "prop-types";
 
-export const UserView = ({ user, onLogout, onError, onSuccess }) => {
+export const UserView = ({ user, onError, onSuccess }) => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formIsVisible, setFormIsVisible] = useState(false);
@@ -60,8 +60,6 @@ export const UserView = ({ user, onLogout, onError, onSuccess }) => {
 
   return (
     <main>
-      <TheHeader onLogout={onLogout} user={user} />
-
       <Button
         onClick={handleToggleForm}
         text="New blog"
