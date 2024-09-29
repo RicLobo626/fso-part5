@@ -34,8 +34,12 @@ module.exports = defineConfig({
   projects: [
     {
       name: "setup db",
-      testMatch: /global\.setup\.js/,
+      testMatch: /db\.setup\.js/,
       teardown: "cleanup db",
+    },
+    {
+      name: "setup auth",
+      testMatch: /auth\.setup\.js/,
     },
     {
       name: "cleanup db",
@@ -46,6 +50,7 @@ module.exports = defineConfig({
       use: {
         ...devices["Desktop Chrome"],
       },
+      dependencies: ["setup auth", "setup db"],
     },
 
     {
@@ -53,6 +58,7 @@ module.exports = defineConfig({
       use: {
         ...devices["Desktop Firefox"],
       },
+      dependencies: ["setup auth", "setup db"],
     },
 
     {
@@ -60,6 +66,7 @@ module.exports = defineConfig({
       use: {
         ...devices["Desktop Safari"],
       },
+      dependencies: ["setup auth", "setup db"],
     },
 
     /* Test against mobile viewports. */
