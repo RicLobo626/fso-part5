@@ -1,9 +1,9 @@
 const { test, describe, beforeEach, expect } = require("@playwright/test");
-const { createBlog } = require("./helper");
-const path = require("path");
+const { createBlog, loginWith } = require("./helper");
 const db = require("../db");
 
-const authFile = path.join(__dirname, "../playwright/.auth/user.json");
+const userFile = "playwright/.auth/user.json";
+const otherUserFile = "playwright/.auth/other-user.json";
 
 describe("Bloglist app", () => {
   beforeEach(async ({ page }) => {
@@ -23,31 +23,23 @@ describe("Bloglist app", () => {
 
   describe("Login", () => {
     test("fails with wrong credentials", async ({ page }) => {
-      await page.getByLabel("Username").fill("testuser");
-      await page.getByLabel("Password").fill("wrongpassword");
-      await page.getByRole("button", { name: "Login" }).click();
-
+      await loginWith(page, "testuser", "wrongpassword");
       await expect(page.getByRole("alert")).toHaveText(
         "invalid username or password"
       );
     });
 
-    test("succeeds with correct credentials", async ({ page }) => {
-      await page.getByLabel("Username").fill("testuser");
-      await page.getByLabel("Password").fill("12345");
-      await page.getByRole("button", { name: "Login" }).click();
-
+    test("succeeds with correct credentials", async ({ page, browser }) => {
+      await loginWith(page, "testuser", "12345");
       await expect(page.getByRole("alert")).toHaveText("Login successful");
-
-      await page.context().storageState({ path: authFile });
     });
   });
 
-  describe("When logged in", () => {
-    test.use({ storageState: authFile });
+  describe("When logged in", async () => {
+    test.use({ storageState: userFile });
 
     test("welcome message and logout button are shown", async ({ page }) => {
-      await expect(page.getByText("Welcome", { exact: false })).toBeVisible();
+      await expect(page.getByText("Welcome")).toBeVisible();
       await expect(page.getByRole("button", { name: "Logout" })).toBeVisible();
     });
 
@@ -63,7 +55,7 @@ describe("Bloglist app", () => {
       ).toBeVisible();
     });
 
-    describe("And several blogs exist", () => {
+    describe("And several blogs are added", () => {
       beforeEach(async ({ page }) => {
         for (let i = 1; i < 4; i++) {
           await createBlog(page, {
@@ -75,23 +67,61 @@ describe("Bloglist app", () => {
       });
 
       describe("And a blog is expanded", () => {
+        let blog;
+
         beforeEach(async ({ page }) => {
-          await page
-            .getByRole("listitem")
-            .filter({ hasText: "Test blog 2" })
-            .getByRole("button", { name: "View" })
-            .click();
+          blog = page.getByRole("listitem").filter({ hasText: "Test blog 2" });
+          await blog.getByRole("button", { name: "View" }).click();
         });
 
-        test("a blog can be liked", async ({ page }) => {
-          const blog = page.getByRole("listitem").filter({ hasText: "Test blog 2" });
-
+        test("a user can like the blog", async () => {
           await expect(blog.getByText("likes")).toContainText("0 likes");
-          await page.getByRole("button", { name: "Like" }).click();
-          await page.getByRole("button", { name: "Like" }).click();
+          await blog.getByRole("button", { name: "Like" }).click();
+          await blog.getByRole("button", { name: "Like" }).click();
           await expect(blog.getByText("likes")).toContainText("2 likes");
+        });
+
+        test("the user who added the blog can delete it", async ({ page }) => {
+          page.on("dialog", (dialog) => dialog.accept());
+          await blog.getByRole("button", { name: "Delete" }).click();
+          await expect(blog).not.toBeVisible();
         });
       });
     });
+  });
+
+  test("users can't delete blogs that were added by another user", async ({
+    browser,
+  }) => {
+    const userContext = await browser.newContext({ storageState: userFile });
+    const otherUserContext = await browser.newContext({
+      storageState: otherUserFile,
+    });
+
+    const userPage = await userContext.newPage();
+    const otherUserPage = await otherUserContext.newPage();
+
+    await userPage.goto("/");
+
+    await createBlog(userPage, {
+      title: "Blog by user",
+      author: "Test author",
+      url: "http://www.testblog.com",
+    });
+
+    await otherUserPage.goto("/");
+
+    const blogAddedByUser = otherUserPage
+      .getByRole("listitem")
+      .filter({ hasText: "Blog by user" });
+
+    await blogAddedByUser.getByRole("button", { name: "View" }).click();
+
+    await expect(
+      blogAddedByUser.getByRole("button", { name: "Delete" })
+    ).not.toBeVisible();
+
+    await userContext.close();
+    await otherUserContext.close();
   });
 });
