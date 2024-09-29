@@ -41,8 +41,8 @@ export const UserView = ({ user, onError, onSuccess }) => {
 
   const handleLikeBlog = async (id) => {
     try {
-      const blog = await likeBlog(id);
-      setBlogs(blogs.map((b) => (b.id === id ? blog : b)));
+      setBlogs(blogs.map((b) => (b.id === id ? { ...b, likes: b.likes + 1 } : b)));
+      await likeBlog(id);
     } catch (e) {
       onError(e);
     }
