@@ -18,7 +18,10 @@ const createBlog = async (req, res) => {
   await blog.save();
   await req.user.save();
 
-  res.status(201).json(blog);
+  console.log(req.user);
+  const { username, name, id } = req.user;
+
+  res.status(201).json({ ...blog.toJSON(), user: { username, name, id } });
 };
 
 const deleteBlog = async (req, res) => {
