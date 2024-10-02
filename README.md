@@ -4,6 +4,6 @@ This repository contains my **submissions** for the exercises in **Part 5 (Testi
 
 ## Main Topics
 
-- Frontend login using Local Storage
-- Unit testing React components
-- E2E Testing with Playwright
+- Frontend **login** using **Local Storage**
+- **Unit testing** React components
+- **E2E testing** with **Playwright**
