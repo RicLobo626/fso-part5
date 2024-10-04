@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-import { AlertBar, LoginForm, TheHeader, UserView } from "@/components";
+import { LoginForm, TheHeader, UserView } from "@/components";
 import { login } from "@/services/login";
 import { handleError } from "@/helpers/errorHelper";
+import { useNotification } from "./contexts/NotificationContext";
 
 const App = () => {
   const [user, setUser] = useState(null);
-  const [alert, setAlert] = useState(null);
+  const { showSuccess, showError } = useNotification();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
@@ -15,15 +16,6 @@ const App = () => {
     }
   }, []);
 
-  const showSuccess = (message) => setAlert({ message, type: "success" });
-  const showError = (message) => setAlert({ message, type: "error" });
-  const handleCloseAlert = () => setAlert(null);
-
-  const handleAndShowError = (e) => {
-    const { message } = handleError(e);
-    showError(message);
-  };
-
   const handleLogin = async (values) => {
     try {
       const data = await login(values);
@@ -31,7 +23,8 @@ const App = () => {
       showSuccess("Login successful");
       setUser(data);
     } catch (e) {
-      handleAndShowError(e);
+      const { message } = handleError(e);
+      showError(message);
     }
   };
 
@@ -42,20 +35,11 @@ const App = () => {
 
   return (
     <>
-      <AlertBar alert={alert} onClose={handleCloseAlert} />
-
       <TheHeader onLogout={handleLogout} user={user} />
 
       {!user && <LoginForm onLogin={handleLogin} />}
 
-      {user && (
-        <UserView
-          user={user}
-          onLogout={handleLogout}
-          onError={handleAndShowError}
-          onSuccess={showSuccess}
-        />
-      )}
+      {user && <UserView user={user} onLogout={handleLogout} />}
     </>
   );
 };

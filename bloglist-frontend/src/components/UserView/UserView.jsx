@@ -1,12 +1,15 @@
 import { createBlog, deleteBlog, getBlogs, likeBlog } from "@/services/blogs";
 import { useState, useEffect } from "react";
 import { BlogFormSection, BlogsSection, Button } from "..";
+import { handleError } from "@/helpers/errorHelper";
+import { useNotification } from "@/contexts/NotificationContext";
 import PropTypes from "prop-types";
 
-export const UserView = ({ user, onError, onSuccess }) => {
+export const UserView = ({ user }) => {
   const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [formIsVisible, setFormIsVisible] = useState(false);
+  const { showSuccess, showError } = useNotification();
 
   useEffect(() => {
     const getAndSetBlogs = async () => {
@@ -15,7 +18,8 @@ export const UserView = ({ user, onError, onSuccess }) => {
         const blogs = await getBlogs();
         setBlogs(blogs);
       } catch (e) {
-        onError(e);
+        const { message } = handleError(e);
+        showError(message);
       } finally {
         setIsLoading(false);
       }
@@ -28,10 +32,11 @@ export const UserView = ({ user, onError, onSuccess }) => {
     try {
       const blog = await createBlog(values);
       setBlogs(blogs.concat(blog));
-      onSuccess("Blog created successfully");
+      showSuccess("Blog created successfully");
       e.target.reset();
     } catch (e) {
-      onError(e);
+      const { message } = handleError(e);
+      showError(message);
     }
   };
 
@@ -44,7 +49,8 @@ export const UserView = ({ user, onError, onSuccess }) => {
       setBlogs(blogs.map((b) => (b.id === id ? { ...b, likes: b.likes + 1 } : b)));
       await likeBlog(id);
     } catch (e) {
-      onError(e);
+      const { message } = handleError(e);
+      showError(message);
     }
   };
 
@@ -52,9 +58,10 @@ export const UserView = ({ user, onError, onSuccess }) => {
     try {
       await deleteBlog(id);
       setBlogs(blogs.filter((b) => b.id !== id));
-      onSuccess("Blog deleted successfully");
+      showSuccess("Blog deleted successfully");
     } catch (e) {
-      onError(e);
+      const { message } = handleError(e);
+      showError(message);
     }
   };
 
@@ -62,8 +69,8 @@ export const UserView = ({ user, onError, onSuccess }) => {
     <main>
       <Button
         onClick={handleToggleForm}
-        text="New blog"
         className={formIsVisible ? "hidden" : ""}
+        text="New blog"
       />
 
       <BlogFormSection
@@ -85,7 +92,4 @@ export const UserView = ({ user, onError, onSuccess }) => {
 
 UserView.propTypes = {
   user: PropTypes.object.isRequired,
-  onLogout: PropTypes.func.isRequired,
-  onError: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func.isRequired,
 };

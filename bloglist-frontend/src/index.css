@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.alert {
+.notification {
   padding: 12px;
 
   margin-bottom: 15px;
@@ -11,12 +11,12 @@
   border-style: solid;
 }
 
-.alert--success {
+.notification--success {
   border-color: #66c47c;
   background-color: #a0d1b1;
 }
 
-.alert--error {
+.notification--error {
   border-color: #db626e;
   background-color: #df9aa1;
 }

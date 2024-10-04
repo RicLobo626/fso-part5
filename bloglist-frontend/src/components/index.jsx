@@ -6,5 +6,5 @@ export { Blogs } from "@/components/UserView/BlogsSection/Blogs/Blogs";
 export { TheHeader } from "@/components/UserView/TheHeader";
 export { UserView } from "@/components/UserView/UserView";
 export { LoginForm } from "@/components/LoginForm";
-export { AlertBar } from "@/components/AlertBar";
+export { Notification } from "@/components/Notification";
 export { Button } from "@/components/Button";
