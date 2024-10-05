@@ -5,20 +5,20 @@ const NotificationContext = createContext();
 
 export const useNotification = () => useContext(NotificationContext);
 
-export const NotificationContextProvider = ({ children }) => {
-  const reducer = (state, { type, payload: message }) => {
-    switch (type) {
-      case "SUCCESS":
-        return { message, style: "success" };
-      case "ERROR":
-        return { message, style: "error" };
-      case "REMOVE":
-        return null;
-      default:
-        return state;
-    }
-  };
+const reducer = (state, { type, payload: message }) => {
+  switch (type) {
+    case "SUCCESS":
+      return { message, style: "success" };
+    case "ERROR":
+      return { message, style: "error" };
+    case "REMOVE":
+      return null;
+    default:
+      return state;
+  }
+};
 
+export const NotificationContextProvider = ({ children }) => {
   const [notification, dispatch] = useReducer(reducer, null);
 
   const showSuccess = (message) => {
