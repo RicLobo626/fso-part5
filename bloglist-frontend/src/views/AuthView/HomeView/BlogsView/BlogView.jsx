@@ -19,7 +19,13 @@ export const BlogView = () => {
     mutationFn: likeBlog,
     onSuccess: () => {
       showSuccess("Blog liked successfully");
-      queryClient.invalidateQueries(["blogs"]);
+      queryClient.setQueryData(["blogs"], (blogs) => {
+        const updatedBlogs = blogs.map((b) => {
+          return b.id !== blog.id ? b : { ...b, likes: b.likes + 1 };
+        });
+
+        return updatedBlogs;
+      });
     },
     onError: (e) => {
       const { message } = handleError(e);
@@ -33,10 +39,9 @@ export const BlogView = () => {
       showSuccess("Comment added successfully");
       queryClient.setQueryData(["blogs"], (blogs) => {
         const updatedBlogs = blogs.map((b) => {
-          if (b.id === blog.id) {
-            return { ...b, comments: b.comments.concat(comment) };
-          }
-          return b;
+          if (b.id !== blog.id) return b;
+
+          return { ...b, comments: b.comments.concat(comment) };
         });
 
         return updatedBlogs;
