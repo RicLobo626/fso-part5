@@ -1,6 +1,50 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteBlog, likeBlog, getBlogs } from "@/services/blogs";
+import { handleError } from "@/helpers/errorHelper";
+import { useNotification } from "@/contexts/NotificationContext";
 import { Blog } from "@/components";
 
-export const Blogs = ({ onLikeBlog, onDeleteBlog, isLoading, blogs, user }) => {
+export const Blogs = ({ user }) => {
+  const { data: blogs, isLoading } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: getBlogs,
+  });
+
+  const queryClient = useQueryClient();
+  const { showSuccess, showError } = useNotification();
+
+  const likeMutation = useMutation({
+    mutationFn: likeBlog,
+    onSuccess: (data) => {
+      showSuccess("Blog liked successfully");
+    },
+    onError: (e) => {
+      const { message } = handleError(e);
+      showError(message);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteBlog,
+    onSuccess: () => {
+      showSuccess("Blog deleted successfully");
+      queryClient.invalidateQueries(["blogs"]);
+    },
+    onError: (e) => {
+      const { message } = handleError(e);
+      showError(message);
+    },
+  });
+
+  const handleDelete = (id) => deleteMutation.mutate(id);
+
+  const handleLike = (id) => {
+    const blogs = queryClient.getQueryData(["blogs"]);
+    const blogToUpdate = blogs.find((b) => b.id === id);
+    blogToUpdate.likes += 1;
+    likeMutation.mutate(id);
+  };
+
   if (isLoading) {
     return <p>Loading blogs...</p>;
   }
@@ -15,8 +59,8 @@ export const Blogs = ({ onLikeBlog, onDeleteBlog, isLoading, blogs, user }) => {
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (
           <Blog
-            onLike={onLikeBlog}
-            onDelete={onDeleteBlog}
+            onDelete={handleDelete}
+            onLike={handleLike}
             blog={blog}
             user={user}
             key={blog.id}

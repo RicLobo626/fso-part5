@@ -10,13 +10,13 @@ export const Blog = ({ onLike, onDelete, blog, user }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleLike = () => onLike(blog.id);
-
   const handleDelete = () => {
     if (window.confirm(`Delete blog ${blog.title} by ${blog.author}?`)) {
       onDelete(blog.id);
     }
   };
+
+  const handleLike = () => onLike(blog.id);
 
   return (
     <li className="blog">

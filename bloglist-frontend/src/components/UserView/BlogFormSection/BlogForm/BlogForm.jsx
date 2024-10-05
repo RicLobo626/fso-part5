@@ -7,7 +7,8 @@ export const BlogForm = ({ onCreateBlog, onCancel }) => {
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData);
 
-    onCreateBlog(values, e);
+    onCreateBlog(values);
+    e.target.reset();
   };
 
   return (
