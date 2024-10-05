@@ -20,4 +20,10 @@ export const likeBlog = async (id) => {
   return data;
 };
 
+export const commentBlog = async (id, body) => {
+  const { data } = await axiosInstance.post(`${baseUrl}/${id}/comments`, body);
+
+  return data;
+};
+
 export const deleteBlog = (id) => axiosInstance.delete(`${baseUrl}/${id}`);
