@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Blog } from "@/components";
 import { AuthContext } from "@/contexts";
+import { BrowserRouter } from "react-router-dom";
 
 describe("Blog component", () => {
   const blog = {
@@ -20,9 +21,11 @@ describe("Blog component", () => {
 
   beforeEach(() => {
     render(
-      <AuthContext.Provider value={{ user }}>
-        <Blog blog={blog} onLike={mockLikeHandler} />
-      </AuthContext.Provider>
+      <BrowserRouter>
+        <AuthContext.Provider value={{ user }}>
+          <Blog blog={blog} onLike={mockLikeHandler} />
+        </AuthContext.Provider>
+      </BrowserRouter>
     );
   });
 
