@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
+import PropTypes from "prop-types";
 
 export const Blog = ({ onLike, onDelete, blog }) => {
   const { user } = useAuth();
@@ -47,4 +48,10 @@ export const Blog = ({ onLike, onDelete, blog }) => {
       )}
     </li>
   );
+};
+
+Blog.propTypes = {
+  onLike: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  blog: PropTypes.object.isRequired,
 };

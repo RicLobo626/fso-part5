@@ -1,4 +1,5 @@
 import { Button } from "@/components";
+import PropTypes from "prop-types";
 
 export const BlogForm = ({ onCreateBlog, onCancel }) => {
   const handleSubmit = (e) => {
@@ -32,4 +33,9 @@ export const BlogForm = ({ onCreateBlog, onCancel }) => {
       <Button onClick={onCancel} text="Cancel" type="button" />
     </form>
   );
+};
+
+BlogForm.propTypes = {
+  onCreateBlog: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
 };
