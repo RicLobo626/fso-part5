@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export const Blog = ({ onLike, onDelete, blog }) => {
   const { user } = useAuth();
@@ -25,7 +26,9 @@ export const Blog = ({ onLike, onDelete, blog }) => {
     <li className="blog">
       <header className="blog-header">
         <h3 className="blog-title">
-          {blog.title} - {blog.author}
+          <Link to={`/blogs/${blog.id}`}>
+            {blog.title} - {blog.author}
+          </Link>
         </h3>
 
         <Button

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteBlog, likeBlog, getBlogs } from "@/services/blogs";
+import { deleteBlog, likeBlog } from "@/services/blogs";
 import { handleError } from "@/helpers/errorHelper";
 import { Blog } from "@/components";
 import { useNotification } from "@/contexts";
@@ -11,7 +11,7 @@ export const Blogs = () => {
 
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
-    queryFn: getBlogs,
+    refetchOnMount: false,
   });
 
   const likeMutation = useMutation({

@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { BlogForm, Blogs, Button } from "@/components";
+import { useNotification } from "@/contexts";
 import { handleError } from "@/helpers/errorHelper";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNotification } from "@/contexts/NotificationContext";
 import { createBlog } from "@/services/blogs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 
-export const HomeView = () => {
+export const BlogsView = () => {
   const queryClient = useQueryClient();
   const [formIsVisible, setFormIsVisible] = useState(false);
   const { showSuccess, showError } = useNotification();

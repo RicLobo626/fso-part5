@@ -1,6 +1,6 @@
 import { TheHeader } from "@/components";
 import { useAuth } from "@/contexts";
-import { HomeView, LoginView, UsersView } from "@/views";
+import { AuthView, LoginView } from "@/views";
 import { Route, Routes } from "react-router-dom";
 
 const App = () => {
@@ -12,8 +12,7 @@ const App = () => {
 
       <main>
         <Routes>
-          <Route path="/" element={user ? <HomeView /> : <LoginView />} />
-          <Route path="/users/*" element={<UsersView />} />
+          <Route path="/*" element={user ? <AuthView /> : <LoginView />} />
         </Routes>
       </main>
     </>
