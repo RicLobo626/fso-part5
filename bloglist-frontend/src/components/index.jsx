@@ -7,3 +7,4 @@ export { Button } from "@/components/Button";
 export { Users } from "@/components/Users";
 export { BlogList } from "@/components/BlogList";
 export { BlogDetails } from "@/components/BlogDetails";
+export { Comments } from "@/components/Comments";
