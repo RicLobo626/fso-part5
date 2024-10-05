@@ -1,14 +1,16 @@
 import { Button } from "@/components";
-import PropTypes from "prop-types";
+import { useAuth } from "@/contexts";
 
-export const LoginForm = ({ onLogin }) => {
+export const LoginForm = () => {
+  const { loginUser } = useAuth();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData);
 
-    onLogin(values);
+    loginUser(values);
   };
 
   return (
@@ -26,8 +28,4 @@ export const LoginForm = ({ onLogin }) => {
       <Button type="submit" text="Login" />
     </form>
   );
-};
-
-LoginForm.propTypes = {
-  onLogin: PropTypes.func.isRequired,
 };

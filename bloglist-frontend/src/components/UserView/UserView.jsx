@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { BlogForm, Blogs, Button } from "..";
-import PropTypes from "prop-types";
 import { handleError } from "@/helpers/errorHelper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNotification } from "@/contexts/NotificationContext";
 import { createBlog } from "@/services/blogs";
 
-export const UserView = ({ user }) => {
+export const UserView = () => {
+  const queryClient = useQueryClient();
   const [formIsVisible, setFormIsVisible] = useState(false);
   const { showSuccess, showError } = useNotification();
-  const queryClient = useQueryClient();
 
   const createBlogMutation = useMutation({
     mutationFn: createBlog,
@@ -45,12 +44,8 @@ export const UserView = ({ user }) => {
 
       <section>
         <h2>All blogs</h2>
-        <Blogs user={user} />
+        <Blogs />
       </section>
     </main>
   );
-};
-
-UserView.propTypes = {
-  user: PropTypes.object.isRequired,
 };

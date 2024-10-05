@@ -1,21 +1,22 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteBlog, likeBlog, getBlogs } from "@/services/blogs";
 import { handleError } from "@/helpers/errorHelper";
-import { useNotification } from "@/contexts/NotificationContext";
 import { Blog } from "@/components";
+import { useNotification } from "@/contexts";
 
-export const Blogs = ({ user }) => {
+export const Blogs = () => {
+  const { showSuccess, showError } = useNotification();
+
+  const queryClient = useQueryClient();
+
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: getBlogs,
   });
 
-  const queryClient = useQueryClient();
-  const { showSuccess, showError } = useNotification();
-
   const likeMutation = useMutation({
     mutationFn: likeBlog,
-    onSuccess: (data) => {
+    onSuccess: () => {
       showSuccess("Blog liked successfully");
     },
     onError: (e) => {
@@ -62,7 +63,6 @@ export const Blogs = ({ user }) => {
             onDelete={handleDelete}
             onLike={handleLike}
             blog={blog}
-            user={user}
             key={blog.id}
           />
         ))}

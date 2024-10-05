@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components";
+import { useAuth } from "@/contexts";
 
-export const Blog = ({ onLike, onDelete, blog, user }) => {
+export const Blog = ({ onLike, onDelete, blog }) => {
+  const { user } = useAuth();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const isCreator = blog.user.username === user.username;
