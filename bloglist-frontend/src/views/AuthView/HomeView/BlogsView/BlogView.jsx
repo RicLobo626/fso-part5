@@ -1,4 +1,4 @@
-import { BlogDetails } from "@/components";
+import { BlogDetails, Comments } from "@/components";
 import { useNotification } from "@/contexts";
 import { handleError } from "@/helpers/errorHelper";
 import { deleteBlog, likeBlog } from "@/services/blogs";
@@ -52,5 +52,19 @@ export const BlogView = () => {
 
   const blog = match && blogs.find(({ id }) => id === match.params.id);
 
-  return <BlogDetails onLike={handleLike} onDelete={handleDelete} blog={blog} />;
+  return (
+    <>
+      <section>
+        <h2>
+          {blog.title} - {blog.author}
+        </h2>
+        <BlogDetails onLike={handleLike} onDelete={handleDelete} blog={blog} />
+      </section>
+
+      <section>
+        <h3>Comments</h3>
+        <Comments comments={blog.comments} />
+      </section>
+    </>
+  );
 };
