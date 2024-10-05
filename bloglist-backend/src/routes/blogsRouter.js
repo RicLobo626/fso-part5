@@ -7,5 +7,10 @@ blogsRouter.get("/", blogsController.getBlogs);
 blogsRouter.post("/", middleware.userExtractor, blogsController.createBlog);
 blogsRouter.delete("/:id", middleware.userExtractor, blogsController.deleteBlog);
 blogsRouter.put("/:id", blogsController.likeBlog);
+blogsRouter.post(
+  "/:id/comments",
+  middleware.userExtractor,
+  blogsController.commentBlog
+);
 
 module.exports = blogsRouter;
