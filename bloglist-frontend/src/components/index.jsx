@@ -8,3 +8,4 @@ export { Users } from "@/components/Users";
 export { BlogList } from "@/components/BlogList";
 export { BlogDetails } from "@/components/BlogDetails";
 export { Comments } from "@/components/Comments";
+export { CommentForm } from "@/components/CommentForm";
