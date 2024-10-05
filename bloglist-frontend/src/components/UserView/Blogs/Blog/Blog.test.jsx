@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Blog } from "@/components";
+import { AuthContext } from "@/contexts";
 
 describe("Blog component", () => {
   const blog = {
@@ -18,7 +19,11 @@ describe("Blog component", () => {
   const mockLikeHandler = vi.fn();
 
   beforeEach(() => {
-    render(<Blog blog={blog} user={user} onLike={mockLikeHandler} />);
+    render(
+      <AuthContext.Provider value={{ user }}>
+        <Blog blog={blog} onLike={mockLikeHandler} />
+      </AuthContext.Provider>
+    );
   });
 
   describe("by default", () => {

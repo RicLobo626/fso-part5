@@ -25,6 +25,6 @@ describe.only("BlogForm component", () => {
     await user.click(createBtn);
 
     expect(mockCreateBlogHandler).toHaveBeenCalledTimes(1);
-    expect(mockCreateBlogHandler).toHaveBeenCalledWith(formData, expect.any(Object));
+    expect(mockCreateBlogHandler).toHaveBeenCalledWith(formData);
   });
 });
