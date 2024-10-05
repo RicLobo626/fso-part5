@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { BlogForm, Blogs, Button } from "..";
+import { BlogForm, Blogs, Button } from "@/components";
 import { handleError } from "@/helpers/errorHelper";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNotification } from "@/contexts/NotificationContext";
 import { createBlog } from "@/services/blogs";
 
-export const UserView = () => {
+export const HomeView = () => {
   const queryClient = useQueryClient();
   const [formIsVisible, setFormIsVisible] = useState(false);
   const { showSuccess, showError } = useNotification();
@@ -27,7 +27,7 @@ export const UserView = () => {
   };
 
   return (
-    <main>
+    <>
       <Button
         onClick={handleToggleForm}
         className={formIsVisible ? "hidden" : ""}
@@ -46,6 +46,6 @@ export const UserView = () => {
         <h2>All blogs</h2>
         <Blogs />
       </section>
-    </main>
+    </>
   );
 };

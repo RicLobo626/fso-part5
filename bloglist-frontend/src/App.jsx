@@ -1,5 +1,7 @@
-import { LoginForm, TheHeader, UserView } from "@/components";
+import { TheHeader } from "@/components";
+import { HomeView, LoginView } from "./views";
 import { useAuth } from "@/contexts";
+import { Route, Routes } from "react-router-dom";
 
 const App = () => {
   const { user } = useAuth();
@@ -8,9 +10,11 @@ const App = () => {
     <>
       <TheHeader />
 
-      {!user && <LoginForm />}
-
-      {user && <UserView />}
+      <main>
+        <Routes>
+          <Route path="/" element={user ? <HomeView /> : <LoginView />} />
+        </Routes>
+      </main>
     </>
   );
 };

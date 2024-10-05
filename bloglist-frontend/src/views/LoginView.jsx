@@ -1,7 +1,7 @@
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
 
-export const LoginForm = () => {
+export const LoginView = () => {
   const { loginUser } = useAuth();
 
   const handleSubmit = (e) => {
