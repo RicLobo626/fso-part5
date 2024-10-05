@@ -1,7 +1,7 @@
-import { BlogDetails, Comments } from "@/components";
+import { BlogDetails, CommentForm, Comments } from "@/components";
 import { useNotification } from "@/contexts";
 import { handleError } from "@/helpers/errorHelper";
-import { deleteBlog, likeBlog } from "@/services/blogs";
+import { commentBlog, deleteBlog, likeBlog } from "@/services/blogs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMatch, useNavigate } from "react-router-dom";
 
@@ -27,6 +27,27 @@ export const BlogView = () => {
     },
   });
 
+  const commentMutation = useMutation({
+    mutationFn: (comment) => commentBlog(blog.id, comment),
+    onSuccess: (comment) => {
+      showSuccess("Comment added successfully");
+      queryClient.setQueryData(["blogs"], (blogs) => {
+        const updatedBlogs = blogs.map((b) => {
+          if (b.id === blog.id) {
+            return { ...b, comments: b.comments.concat(comment) };
+          }
+          return b;
+        });
+
+        return updatedBlogs;
+      });
+    },
+    onError: (e) => {
+      const { message } = handleError(e);
+      showError(message);
+    },
+  });
+
   const deleteMutation = useMutation({
     mutationFn: deleteBlog,
     onSuccess: () => {
@@ -40,10 +61,6 @@ export const BlogView = () => {
     },
   });
 
-  const handleDelete = (id) => deleteMutation.mutate(id);
-
-  const handleLike = (id) => likeMutation.mutate(id);
-
   const match = useMatch("/blogs/:id");
 
   if (isLoading) {
@@ -51,6 +68,14 @@ export const BlogView = () => {
   }
 
   const blog = match && blogs.find(({ id }) => id === match.params.id);
+
+  const handleDelete = (id) => deleteMutation.mutate(id);
+
+  const handleLike = (id) => likeMutation.mutate(id);
+
+  const handleAddComment = (comment) => {
+    commentMutation.mutate(comment);
+  };
 
   return (
     <>
@@ -63,6 +88,7 @@ export const BlogView = () => {
 
       <section>
         <h3>Comments</h3>
+        <CommentForm onAddComment={handleAddComment} />
         <Comments comments={blog.comments} />
       </section>
     </>
