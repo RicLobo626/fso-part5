@@ -27,15 +27,17 @@ export const TheHeader = () => {
         </p>
       )}
 
-      <nav>
-        <ul>
-          {links.map((link) => (
-            <li key={link.to}>
-              <Link to={link.to}>{link.text}</Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {user && (
+        <nav>
+          <ul>
+            {links.map((link) => (
+              <li key={link.to}>
+                <Link to={link.to}>{link.text}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 };
