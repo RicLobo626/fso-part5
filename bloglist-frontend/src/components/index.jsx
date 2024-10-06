@@ -10,3 +10,5 @@ export { BlogDetails } from "@/components/BlogDetails";
 export { Comments } from "@/components/Comments";
 export { CommentForm } from "@/components/CommentForm";
 export { Link } from "@/components/Link";
+export { Field } from "@/components/Field";
+export { Textarea } from "@/components/Textarea";
