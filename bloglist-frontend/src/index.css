@@ -26,6 +26,10 @@
   @apply bg-white rounded p-5 shadow-md;
 }
 
+.link {
+  @apply text-blue-500 hover:text-blue-600 hover:underline;
+}
+
 * {
   box-sizing: border-box;
 }
