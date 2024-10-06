@@ -15,12 +15,16 @@ export const BlogDetails = ({ blog, onLike, onDelete }) => {
   const handleLike = () => onLike(blog.id);
 
   return (
-    <div id={`blog-${blog.id}-details`}>
-      <a href={blog.url}>{blog.url}</a>
+    <div id={`blog-${blog.id}-details`} className="flex flex-col gap-3">
+      <a href={blog.url} className="link">
+        {blog.url}
+      </a>
+
       <p>
         {blog.likes} likes
-        <Button onClick={handleLike} text="Like" className="btn-green" />
+        <Button onClick={handleLike} text="Like" className="btn-green ml-2" />
       </p>
+
       <p>{blog.user.name}</p>
       {isCreator && (
         <Button onClick={handleDelete} text="Delete" className="btn-red" />
