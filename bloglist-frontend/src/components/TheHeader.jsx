@@ -17,7 +17,7 @@ export const TheHeader = () => {
   ];
 
   return (
-    <header className="flex flex-wrap gap-3 bg-slate-100 p-3">
+    <header className="flex flex-wrap gap-3 bg-slate-300 p-3">
       <h1 className="text-2xl font-semibold mr-auto">Bloglist</h1>
 
       {user && (
