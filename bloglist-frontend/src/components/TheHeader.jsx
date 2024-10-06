@@ -1,6 +1,6 @@
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
-import { Link } from "react-router-dom";
+import { Link } from "@/components";
 
 export const TheHeader = () => {
   const { user, logoutUser } = useAuth();
@@ -32,7 +32,7 @@ export const TheHeader = () => {
           <ul>
             {links.map((link) => (
               <li key={link.to}>
-                <Link to={link.to}>{link.text}</Link>
+                <Link {...link} />
               </li>
             ))}
           </ul>

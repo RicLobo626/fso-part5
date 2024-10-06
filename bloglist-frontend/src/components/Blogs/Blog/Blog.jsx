@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components";
-import { Link } from "react-router-dom";
+import { Link } from "@/components";
 import { BlogDetails } from "@/components/BlogDetails";
 import PropTypes from "prop-types";
 
@@ -15,9 +15,7 @@ export const Blog = ({ onLike, onDelete, blog }) => {
     <li className="blog">
       <header className="blog-header">
         <h3 className="blog-title">
-          <Link to={`/blogs/${blog.id}`}>
-            {blog.title} - {blog.author}
-          </Link>
+          <Link to={`/blogs/${blog.id}`} text={`${blog.title} - ${blog.author}`} />
         </h3>
 
         <Button
