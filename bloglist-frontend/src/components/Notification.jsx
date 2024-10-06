@@ -8,7 +8,7 @@ export const Notification = () => {
   return (
     <div
       className={`notification notification--${notification.style}`}
-      role="notification"
+      role="alert"
       aria-live="assertive"
       aria-atomic="true"
     >
