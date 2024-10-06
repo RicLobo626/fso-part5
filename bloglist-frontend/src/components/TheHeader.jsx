@@ -1,6 +1,7 @@
 import { Button } from "@/components";
 import { useAuth } from "@/contexts";
-import { Link } from "@/components";
+import clsx from "clsx";
+import { NavLink } from "react-router-dom";
 
 export const TheHeader = () => {
   const { user, logoutUser } = useAuth();
@@ -32,7 +33,14 @@ export const TheHeader = () => {
           <ul className="flex gap-5">
             {links.map((link) => (
               <li key={link.to}>
-                <Link {...link} />
+                <NavLink
+                  to={link.to}
+                  className={({ isActive }) =>
+                    clsx("link", { "font-medium underline": isActive })
+                  }
+                >
+                  {link.text}
+                </NavLink>
               </li>
             ))}
           </ul>
