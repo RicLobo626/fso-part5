@@ -17,19 +17,19 @@ export const TheHeader = () => {
   ];
 
   return (
-    <header>
-      <h1>Bloglist</h1>
+    <header className="flex flex-wrap gap-3 bg-slate-100 p-3">
+      <h1 className="text-2xl font-semibold mr-auto">Bloglist</h1>
 
       {user && (
-        <p>
+        <p className="flex flex-wrap items-center align-bottom gap-2 ">
           Welcome, {user.name}!
-          <Button onClick={logoutUser} text="Logout" />
+          <Button onClick={logoutUser} text="Logout" className="btn-red" />
         </p>
       )}
 
       {user && (
-        <nav>
-          <ul>
+        <nav className="basis-full">
+          <ul className="flex gap-5">
             {links.map((link) => (
               <li key={link.to}>
                 <Link {...link} />
