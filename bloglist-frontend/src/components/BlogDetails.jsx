@@ -18,10 +18,13 @@ export const BlogDetails = ({ blog, onLike, onDelete }) => {
     <div id={`blog-${blog.id}-details`}>
       <a href={blog.url}>{blog.url}</a>
       <p>
-        {blog.likes} likes <Button onClick={handleLike} text="Like" />
+        {blog.likes} likes
+        <Button onClick={handleLike} text="Like" className="btn-green" />
       </p>
       <p>{blog.user.name}</p>
-      {isCreator && <Button onClick={handleDelete} text="Delete" />}
+      {isCreator && (
+        <Button onClick={handleDelete} text="Delete" className="btn-red" />
+      )}
     </div>
   );
 };

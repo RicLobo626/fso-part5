@@ -23,6 +23,7 @@ export const Blog = ({ onLike, onDelete, blog }) => {
           text={isExpanded ? "Hide" : "View"}
           aria-expanded={isExpanded}
           aria-controls={`blog-${blog.id}-details`}
+          className="btn-slate"
         />
       </header>
 

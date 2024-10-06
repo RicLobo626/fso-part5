@@ -30,7 +30,7 @@ export const BlogsView = () => {
     <>
       <Button
         onClick={handleToggleForm}
-        className={formIsVisible ? "hidden" : ""}
+        className={formIsVisible ? "hidden" : "btn-slate"}
         text="New blog"
       />
 

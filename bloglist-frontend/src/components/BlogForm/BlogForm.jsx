@@ -29,8 +29,8 @@ export const BlogForm = ({ onCreateBlog, onCancel }) => {
         <input type="text" id="url" name="url" />
       </div>
 
-      <Button type="submit" text="Create" />
-      <Button onClick={onCancel} text="Cancel" type="button" />
+      <Button type="submit" text="Create" className="btn-slate" />
+      <Button onClick={onCancel} text="Cancel" type="button" className="btn-slate" />
     </form>
   );
 };

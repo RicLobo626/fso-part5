@@ -1,3 +1,5 @@
+import { Button } from "@/components/Button";
+
 export const CommentForm = ({ onAddComment }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,7 +15,7 @@ export const CommentForm = ({ onAddComment }) => {
       <div>
         <textarea id="comment" name="content" />
       </div>
-      <button type="submit">Add comment</button>
+      <Button type="submit" text="Add comment" className="btn-slate" />
     </form>
   );
 };

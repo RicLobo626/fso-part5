@@ -25,7 +25,7 @@ export const LoginView = () => {
         <input id="password" name="password" type="password" />
       </div>
 
-      <Button type="submit" text="Login" />
+      <Button type="submit" text="Login" className="btn-slate" />
     </form>
   );
 };
