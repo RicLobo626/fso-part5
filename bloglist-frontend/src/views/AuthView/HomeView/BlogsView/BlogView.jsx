@@ -84,16 +84,18 @@ export const BlogView = () => {
 
   return (
     <>
-      <section>
-        <h2>
+      <article className="section mb-6">
+        <h2 className="text-2xl mb-4">
           {blog.title} - {blog.author}
         </h2>
-        <BlogDetails onLike={handleLike} onDelete={handleDelete} blog={blog} />
-      </section>
 
-      <section>
-        <h3>Comments</h3>
-        <CommentForm onAddComment={handleAddComment} />
+        <BlogDetails onLike={handleLike} onDelete={handleDelete} blog={blog} />
+      </article>
+
+      <section className="section">
+        <h3 className="text-xl mb-4">Comments</h3>
+
+        <CommentForm onAddComment={handleAddComment} className="mb-4" />
         <Comments comments={blog.comments} />
       </section>
     </>
