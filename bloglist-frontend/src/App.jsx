@@ -10,7 +10,7 @@ const App = () => {
     <>
       <TheHeader />
 
-      <main>
+      <main className="p-5">
         <Routes>
           <Route path="/*" element={user ? <AuthView /> : <LoginView />} />
         </Routes>
