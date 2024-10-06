@@ -22,6 +22,10 @@
   @apply rounded border-2 px-2 data-[focus]:bg-slate-100 data-[focus]:outline-offset-2 outline-slate-500;
 }
 
+.section {
+  @apply bg-white rounded p-5 shadow-md;
+}
+
 * {
   box-sizing: border-box;
 }
