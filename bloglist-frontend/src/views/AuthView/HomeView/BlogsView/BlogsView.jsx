@@ -4,6 +4,7 @@ import { handleError } from "@/helpers/errorHelper";
 import { createBlog } from "@/services/blogs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import clsx from "clsx";
 
 export const BlogsView = () => {
   const queryClient = useQueryClient();
@@ -30,20 +31,21 @@ export const BlogsView = () => {
     <>
       <Button
         onClick={handleToggleForm}
-        className={formIsVisible ? "hidden" : "btn-slate"}
+        className={clsx("btn-slate mb-6", { hidden: formIsVisible })}
         text="New blog"
       />
 
-      <section className={!formIsVisible ? "hidden" : ""}>
-        <h2>Create new</h2>
+      <section className={clsx("section mb-6", { hidden: !formIsVisible })}>
+        <h2 className="text-2xl mb-4">Create new</h2>
+
         <BlogForm
           onCreateBlog={createBlogMutation.mutate}
           onCancel={handleToggleForm}
         />
       </section>
 
-      <section>
-        <h2>All blogs</h2>
+      <section className="section">
+        <h2 className="text-2xl mb-4">All blogs</h2>
         <Blogs />
       </section>
     </>
