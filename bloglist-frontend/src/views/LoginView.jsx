@@ -1,4 +1,4 @@
-import { Button } from "@/components";
+import { Button, Field } from "@/components";
 import { useAuth } from "@/contexts";
 
 export const LoginView = () => {
@@ -15,15 +15,9 @@ export const LoginView = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input type="text" id="username" name="username" />
-      </div>
+      <Field label="Username" id="username" name="username" />
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" />
-      </div>
+      <Field label="Password" id="password" name="password" type="password" />
 
       <Button type="submit" text="Login" className="btn-slate" />
     </form>
