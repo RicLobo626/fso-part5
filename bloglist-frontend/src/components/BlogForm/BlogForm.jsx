@@ -1,4 +1,4 @@
-import { Button } from "@/components";
+import { Button, Field } from "@/components";
 import PropTypes from "prop-types";
 
 export const BlogForm = ({ onCreateBlog, onCancel }) => {
@@ -14,22 +14,13 @@ export const BlogForm = ({ onCreateBlog, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="title">Title</label>
-        <input type="text" id="title" name="title" />
-      </div>
+      <Field label="Title" id="title" name="title" />
+      <Field label="Author" id="author" name="author" />
+      <Field label="URL" id="url" name="url" />
 
-      <div>
-        <label htmlFor="author">Author</label>
-        <input type="text" id="author" name="author" />
-      </div>
+      <hr className="my-4" />
 
-      <div>
-        <label htmlFor="url">URL</label>
-        <input type="text" id="url" name="url" />
-      </div>
-
-      <Button type="submit" text="Create" className="btn-slate" />
+      <Button type="submit" text="Create" className="btn-slate mr-2" />
       <Button onClick={onCancel} text="Cancel" type="button" className="btn-slate" />
     </form>
   );
