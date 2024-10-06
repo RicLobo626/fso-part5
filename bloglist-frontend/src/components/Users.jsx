@@ -12,20 +12,23 @@ export const Users = () => {
   }
 
   return (
-    <table>
+    <table className="border-2">
       <thead>
-        <tr align="left">
-          <th>Name</th>
-          <th>Blogs created</th>
+        <tr align="left" className="bg-slate-200">
+          <th className="p-3 font-medium rounded">Name</th>
+          <th className="p-3 font-medium">Blogs created</th>
         </tr>
       </thead>
+
       <tbody>
         {users.map((user) => (
           <tr key={user.id}>
-            <td>
+            <td className="p-3 border-2">
               <Link to={`/users/${user.id}`} text={user.name} />
             </td>
-            <td>{user.blogs.length}</td>
+            <td className="p-3 border-2" align="center">
+              {user.blogs.length}
+            </td>
           </tr>
         ))}
       </tbody>
