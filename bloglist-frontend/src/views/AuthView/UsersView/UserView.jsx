@@ -14,17 +14,14 @@ export const UserView = () => {
     return <p>Loading user...</p>;
   }
 
+  console.log(users);
   const user = match && users.find(({ id }) => id === match.params.id);
 
   return (
-    <>
-      <h2>{user.name}</h2>
+    <section className="section">
+      <h2 className="text-2xl mb-4">{user.name}&apos;s blogs</h2>
 
-      <section>
-        <h3>Added blogs</h3>
-
-        <BlogList blogs={user.blogs} />
-      </section>
-    </>
+      <BlogList blogs={user.blogs} />
+    </section>
   );
 };
