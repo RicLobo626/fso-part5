@@ -18,6 +18,10 @@
   @apply bg-green-300 border-green-400;
 }
 
+.field {
+  @apply rounded border-2 px-2 data-[focus]:bg-slate-100 data-[focus]:outline-offset-2 outline-slate-500;
+}
+
 * {
   box-sizing: border-box;
 }
