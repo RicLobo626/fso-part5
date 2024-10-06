@@ -1,6 +1,7 @@
-import { Button } from "@/components/Button";
+import { Button } from "@/components";
+import { Textarea } from "@/components";
 
-export const CommentForm = ({ onAddComment }) => {
+export const CommentForm = ({ onAddComment, ...props }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -10,12 +11,9 @@ export const CommentForm = ({ onAddComment }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="comment">Comment</label>
-      <div>
-        <textarea id="comment" name="content" />
-      </div>
-      <Button type="submit" text="Add comment" className="btn-slate" />
+    <form onSubmit={handleSubmit} {...props}>
+      <Textarea label="Add a comment" id="comment" name="content" />
+      <Button type="submit" text="Add" className="btn-slate" />
     </form>
   );
 };
