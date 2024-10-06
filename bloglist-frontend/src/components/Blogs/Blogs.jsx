@@ -55,7 +55,7 @@ export const Blogs = () => {
   }
 
   return (
-    <ul className="blogs">
+    <ul className="max-w-prose">
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map((blog) => (

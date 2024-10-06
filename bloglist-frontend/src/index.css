@@ -28,28 +28,3 @@
 .hidden {
   display: none;
 }
-
-.blogs {
-  padding: 0;
-  max-width: 600px;
-}
-
-.blog {
-  list-style: none;
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-  border: 1px solid #ccc;
-}
-
-.blog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.blog-title {
-  font-size: 1rem;
-  text-transform: capitalize;
-  margin: 0;
-}

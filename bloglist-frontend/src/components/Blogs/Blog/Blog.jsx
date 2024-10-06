@@ -12,9 +12,9 @@ export const Blog = ({ onLike, onDelete, blog }) => {
   };
 
   return (
-    <li className="blog">
-      <header className="blog-header">
-        <h3 className="blog-title">
+    <li className="border-2 rounded p-3 mb-2">
+      <header className="flex justify-between">
+        <h3>
           <Link to={`/blogs/${blog.id}`} text={`${blog.title} - ${blog.author}`} />
         </h3>
 
