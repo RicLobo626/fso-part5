@@ -8,6 +8,8 @@ mongoose.set("strictQuery", false);
 
 const app = express();
 
+app.use(express.static("dist"));
+
 app.use(middleware.requestLogger);
 app.use(express.json());
 app.use(middleware.tokenExtractor);
