@@ -54,14 +54,6 @@ module.exports = defineConfig({
     },
 
     {
-      name: "firefox",
-      use: {
-        ...devices["Desktop Firefox"],
-      },
-      dependencies: ["setup auth", "setup db"],
-    },
-
-    {
       name: "webkit",
       use: {
         ...devices["Desktop Safari"],
