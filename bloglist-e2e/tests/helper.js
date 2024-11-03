@@ -10,8 +10,8 @@ const createBlog = async (page, { title, author, url }) => {
   await page.getByLabel("Author").fill(author);
   await page.getByLabel("URL").fill(url);
   await page.getByRole("button", { name: "Create" }).click();
-  await page.getByText(title).waitFor();
   await page.getByRole("button", { name: "Cancel" }).click();
+  await page.locator("li", { hasText: title }).waitFor();
 };
 
 module.exports = { loginWith, createBlog };
