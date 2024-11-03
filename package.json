@@ -1,0 +1,16 @@
+{
+  "name": "fso-part11-bloglist",
+  "version": "1.0.0",
+  "description": "This branch contains my **submissions** for the exercises in **Part 5 (Testing React apps)** of the [FullstackOpen course](https://fullstackopen.com/en/).",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd bloglist-backend && npm start",
+    "build:ui": "cd bloglist-frontend && npm run build && cp -r dist ../bloglist-backend",
+    "test:e2e": "cd bloglist-e2e && npm test",
+    "lint:frontend": "cd bloglist-frontend && npm run lint",
+    "lint:backend": "cd bloglist-backend && npm run lint",
+    "lint:all": "npm run lint:frontend && npm run lint:backend"
+  },
+  "author": "",
+  "license": "ISC"
+}
