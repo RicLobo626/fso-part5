@@ -22,7 +22,7 @@ export const UserView = ({ user, onError, onSuccess }) => {
     };
 
     getAndSetBlogs();
-  }, []);
+  }, [onError]);
 
   const handleCreateBlog = async (values, e) => {
     try {
@@ -60,11 +60,7 @@ export const UserView = ({ user, onError, onSuccess }) => {
 
   return (
     <main>
-      <Button
-        onClick={handleToggleForm}
-        text="New blog"
-        className={formIsVisible ? "hidden" : ""}
-      />
+      <Button onClick={handleToggleForm} text="New blog" className={formIsVisible ? "hidden" : ""} />
 
       <BlogFormSection
         onCreateBlog={handleCreateBlog}
