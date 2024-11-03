@@ -4,6 +4,10 @@
   "description": "This branch contains my **submissions** for the exercises in **Part 5 (Testing React apps)** of the [FullstackOpen course](https://fullstackopen.com/en/).",
   "main": "index.js",
   "scripts": {
+    "install:frontend": "cd bloglist-frontend && npm install",
+    "install:backend": "cd bloglist-backend && npm install",
+    "install:e2e": "cd bloglist-e2e && npm install",
+    "install:all": "npm run install:frontend && npm run install:backend && npm run install:e2e",
     "start": "cd bloglist-backend && npm start",
     "build:ui": "cd bloglist-frontend && npm run build && cp -r dist ../bloglist-backend",
     "test:e2e": "cd bloglist-e2e && npm test",
