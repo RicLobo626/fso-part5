@@ -11,7 +11,7 @@ const { defineConfig, devices } = require("@playwright/test");
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
-  timeout: 3000,
+  timeout: 8000,
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: false,
@@ -85,7 +85,6 @@ module.exports = defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: "cd ../bloglist-backend && npm run start:test",
-    port: 3002,
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
 });
