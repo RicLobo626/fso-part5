@@ -22,6 +22,7 @@ export const UserView = ({ user, onError, onSuccess }) => {
     };
 
     getAndSetBlogs();
+    // eslint-disable-next-line
   }, []);
 
   const handleCreateBlog = async (values, e) => {
@@ -60,11 +61,7 @@ export const UserView = ({ user, onError, onSuccess }) => {
 
   return (
     <main>
-      <Button
-        onClick={handleToggleForm}
-        text="New blog"
-        className={formIsVisible ? "hidden" : ""}
-      />
+      <Button onClick={handleToggleForm} text="New blog" className={formIsVisible ? "hidden" : ""} />
 
       <BlogFormSection
         onCreateBlog={handleCreateBlog}
