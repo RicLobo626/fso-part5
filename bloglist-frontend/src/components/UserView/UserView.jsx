@@ -22,7 +22,8 @@ export const UserView = ({ user, onError, onSuccess }) => {
     };
 
     getAndSetBlogs();
-  }, [onError]);
+    // eslint-disable-next-line
+  }, []);
 
   const handleCreateBlog = async (values, e) => {
     try {

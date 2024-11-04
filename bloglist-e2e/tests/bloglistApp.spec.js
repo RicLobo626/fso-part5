@@ -53,6 +53,9 @@ describe("Bloglist app", () => {
 
     describe("And several blogs are added and expanded", () => {
       beforeEach(async ({ page }) => {
+        await db.resetBlogs();
+        await page.goto("/");
+
         for (let i = 1; i < 4; i++) {
           await createBlog(page, {
             title: `Test Blog ${i}`,
